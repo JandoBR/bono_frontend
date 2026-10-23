@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router';
-import Navegacion from './components/Navegacion';
-import Inicio from './paginas/Inicio';
-import Catalogo from './paginas/Catalogo';
-import Detalle from './paginas/Detalle';
-import Favoritos from './paginas/Favoritos';
-import NuevaReceta from './paginas/NuevaReceta';
-import NoEncontrada from './paginas/NoEncontrada';
+import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router";
+import Navegacion from "./components/Navegacion";
+import Inicio from "./paginas/Inicio";
+import Catalogo from "./paginas/Catalogo";
+import Detalle from "./paginas/Detalle";
+import Favoritos from "./paginas/Favoritos";
+import NuevaReceta from "./paginas/NuevaReceta";
+import NoEncontrada from "./paginas/NoEncontrada";
 
 function leerFavoritos() {
-  return JSON.parse(localStorage.getItem('favoritos')) ?? [];
+  return JSON.parse(localStorage.getItem("favoritos")) ?? [];
 }
 
 function App() {
@@ -17,15 +17,14 @@ function App() {
   const [propias, setPropias] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem('favoritos', JSON.stringify(favoritos));
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
   }, [favoritos]);
 
   function toggleFavorito(id) {
     if (favoritos.includes(id)) {
       setFavoritos(favoritos.filter((f) => f !== id));
     } else {
-      favoritos.push(id);
-      setFavoritos(favoritos);
+      setFavoritos([...favoritos, id]);
     }
   }
 
@@ -43,14 +42,23 @@ function App() {
           <Route
             path="/recetas/:id"
             element={
-              <Detalle propias={propias} favoritos={favoritos} onToggleFavorito={toggleFavorito} />
+              <Detalle
+                propias={propias}
+                favoritos={favoritos}
+                onToggleFavorito={toggleFavorito}
+              />
             }
           />
           <Route
             path="/favoritos"
-            element={<Favoritos favoritos={favoritos} onQuitar={toggleFavorito} />}
+            element={
+              <Favoritos favoritos={favoritos} onQuitar={toggleFavorito} />
+            }
           />
-          <Route path="/nueva" element={<NuevaReceta onAgregar={agregarReceta} />} />
+          <Route
+            path="/nueva"
+            element={<NuevaReceta onAgregar={agregarReceta} />}
+          />
           <Route path="/404" element={<NoEncontrada />} />
         </Routes>
       </main>
