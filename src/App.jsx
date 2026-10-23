@@ -60,6 +60,7 @@ function App() {
             element={<NuevaReceta onAgregar={agregarReceta} />}
           />
           <Route path="/404" element={<NoEncontrada />} />
+          <Route path="/*" element={<NoEncontrada />} />
         </Routes>
       </main>
     </div>
