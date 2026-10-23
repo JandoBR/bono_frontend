@@ -13,10 +13,16 @@ function Temporizador({ minutos }) {
   useEffect(() => {
     if (!corriendo) return;
 
-    setInterval(() => {
+    const id = setInterval(() => {
       setSegundos((s) => (s > 0 ? s - 1 : 0));
     }, 1000);
+
+    return () => clearInterval(id);
   }, [corriendo]);
+
+  useEffect(() => {
+    if (segundos === 0) setCorriendo(false);
+  }, [segundos]);
 
   return (
     <section className="temporizador">
