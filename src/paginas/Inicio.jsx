@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
-import { obtenerRecetas } from '../api';
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
+import { obtenerRecetas } from "../api";
 
 function Inicio() {
   const [destacada, setDestacada] = useState(null);
@@ -11,7 +11,7 @@ function Inicio() {
     obtenerRecetas(controller.signal)
       .then((recetas) => setDestacada(recetas[0]))
       .catch((error) => {
-        if (error.name !== 'AbortError') console.error(error);
+        if (error.name !== "AbortError") console.error(error);
       });
 
     return () => controller.abort();
@@ -25,14 +25,16 @@ function Inicio() {
       {destacada ? (
         <div className="destacada">
           <h2>Receta de la semana: {destacada.nombre}</h2>
-          <p>Por {destacada.autor}</p>
+          <p>Por {destacada.autor.nombre}</p>
           <Link to={`/recetas/${destacada.id}`}>Ver la receta</Link>
         </div>
       ) : (
         <p>Cargando la receta de la semana…</p>
       )}
 
-      <Link className="boton" to="/recetas">Ver todas las recetas</Link>
+      <Link className="boton" to="/recetas">
+        Ver todas las recetas
+      </Link>
     </section>
   );
 }
