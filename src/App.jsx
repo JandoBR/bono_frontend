@@ -17,7 +17,7 @@ function App() {
   const [propias, setPropias] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem('favoritos', favoritos);
+    localStorage.setItem('favoritos', JSON.stringify(favoritos));
   }, [favoritos]);
 
   function toggleFavorito(id) {
