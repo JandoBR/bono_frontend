@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 function formatear(segundos) {
   const m = Math.floor(segundos / 60);
   const s = segundos % 60;
-  return `${m}:${String(s).padStart(2, '0')}`;
+  return `${m}:${String(s).padStart(2, "0")}`;
 }
 
 function Temporizador({ minutos }) {
@@ -27,9 +27,11 @@ function Temporizador({ minutos }) {
   return (
     <section className="temporizador">
       <h2>Temporizador</h2>
-      <p className="tiempo" aria-label="Tiempo restante">{formatear(segundos)}</p>
+      <p className="tiempo" aria-label="Tiempo restante">
+        {formatear(segundos)}
+      </p>
       <button onClick={() => setCorriendo(!corriendo)}>
-        {corriendo ? 'Pausar' : 'Iniciar'}
+        {corriendo ? "Pausar" : "Iniciar"}
       </button>
       <button
         onClick={() => {
