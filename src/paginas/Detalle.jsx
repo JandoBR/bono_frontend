@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router';
-import { obtenerReceta, obtenerRecetas } from '../api';
-import Temporizador from '../components/Temporizador';
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router";
+import { obtenerReceta, obtenerRecetas } from "../api";
+import Temporizador from "../components/Temporizador";
 
 function Detalle({ propias, favoritos, onToggleFavorito }) {
   const { id } = useParams();
@@ -21,20 +21,25 @@ function Detalle({ propias, favoritos, onToggleFavorito }) {
       return;
     }
 
-    Promise.all([obtenerReceta(id, controller.signal), obtenerRecetas(controller.signal)])
+    Promise.all([
+      obtenerReceta(id, controller.signal),
+      obtenerRecetas(controller.signal),
+    ])
       .then(([encontrada, todas]) => {
         setReceta(encontrada ?? null);
         setRelacionadas(
-          encontrada ? todas.filter((r) => encontrada.relacionadas.includes(r.id)) : []
+          encontrada
+            ? todas.filter((r) => encontrada.relacionadas.includes(r.id))
+            : [],
         );
         setCargando(false);
       })
       .catch((error) => {
-        if (error.name !== 'AbortError') console.error(error);
+        if (error.name !== "AbortError") console.error(error);
       });
 
     return () => controller.abort();
-  }, []);
+  }, [id]);
 
   if (cargando) return <p>Cargando receta…</p>;
   if (!receta) return <p>No encontramos esta receta.</p>;
@@ -49,7 +54,7 @@ function Detalle({ propias, favoritos, onToggleFavorito }) {
       </p>
 
       <button onClick={() => onToggleFavorito(receta.id)}>
-        {esFavorita ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+        {esFavorita ? "Quitar de favoritos" : "Agregar a favoritos"}
       </button>
 
       {receta.ingredientes && (
